@@ -1,6 +1,6 @@
 # psxmatrix
+<img width="1024" height="1024" alt="psxmatrix" src="https://github.com/user-attachments/assets/8d6908c7-76d2-4cae-96cc-dc400d1b2059" />
 PSXMATRIX HYRDA LOOP
-
 # PSX Meta-Harness — Usage Guide for Builder Agents
 
 **Date:** August 4, 2026  
