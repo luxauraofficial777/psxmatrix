@@ -21,6 +21,42 @@ The meta-harness automates a **9-test matrix** (3 emulators x 3 BIOS modes) for 
 
 This replaces manual one-off emulator test runs with a single command.
 
+# PSXMatrix Release Document
+## Version: v1.1 — August 12, 2026
+
+**Author:** Lux Aura / Antigravity Suite  
+**Target Architecture:** Rust FFI / PSX Hardware Interface  
+
+---
+
+### Executive Summary
+
+**PSXMatrix v1.1** (+0.1 upgrade) introduces full 64-bit memory layout parity for Rust FFI bindings, corrected DMA hardware register base addresses, and PEAK-1..5 subsystem interop.
+
+---
+
+### Key Technical Upgrades in v1.1
+
+1. **64-Bit FFI Struct Alignment & Static Assertion Fix:**
+   - Updated `RustFFIExport` struct alignment to 96 bytes on x64 host architectures (`alignas(16)` with `uint64_t DataPtr`).
+   - Fixed compile-time static assertion (`static_assert(sizeof(RustFFIExport) == 96)`).
+
+2. **PSX Hardware DMA Base Address Corrections:**
+   - Corrected base addresses in `PSXHwRegMap`:
+     - `DMA_CH1` (MDEC Out): `0x1F801090` (previously misallocated to `0x1F8010A0`)
+     - `DMA_CH2` (GPU): `0x1F8010A0` (previously misallocated to `0x1F8010B0`)
+
+3. **PEAK-1..5 Subsystem FFI Dispatch:**
+   - Full implementation of `gamma_ffi.rs` crate (5/5 tests passed).
+   - Functions: `peak1_export_bytecode`, `peak2_qvec_simd`, `peak3_spec_scope_enter/exit`, `peak4_hw_int_dispatch`, `peak5_ring_iter_next`.
+
+---
+
+### Verification Matrix
+
+- **Rust FFI Crate:** 5/5 unit tests passed (`cargo test` in `rust/`).
+- **Hardware Register Mapping:** DMA CH1/CH2 verified against hardware specification.
+
 ---
 
 ## Quick Start
